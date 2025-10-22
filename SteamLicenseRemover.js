@@ -1,13 +1,3 @@
-    // ==UserScript==
-    // @name         Steam License Remover
-    // @namespace
-    // @version      2.0
-    // @description  Remove any "Free" games from your Steam Library by removing the game's license from your account.  
-    // @author       IroN404
-    // @fork_comission  Beardox
-    // @match        https://store.steampowered.com/account/licenses/
-
-
 let removedCount = 0;
 
 async function removeGame(id) {
@@ -16,9 +6,9 @@ async function removeGame(id) {
         const response = await fetch('https://store.steampowered.com/account/removelicense', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded' // Alterado o Content-Type
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: `sessionid=${encodeURIComponent(g_sessionID)}&packageid=${encodeURIComponent(id)}` // Corrigido o objeto body
+            body: `sessionid=${encodeURIComponent(g_sessionID)}&packageid=${encodeURIComponent(id)}`
         });
 
         if (response.ok) {
@@ -63,7 +53,7 @@ async function removeGames() {
         const id = extractIdFromLink(link.href);
         if (id) {
             await removeGame(id);
-            await new Promise(resolve => setTimeout(resolve, 2000)); // Aguarda 2 segundos antes de processar o próximo link
+            await new Promise(resolve => setTimeout(resolve, 10000)); // Aguarda 10 segundos antes de processar o próximo link
         } else {
             console.log(`Failed to extract ID from link: ${link.href}`);
         }
